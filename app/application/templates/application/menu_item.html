@@ -1,0 +1,50 @@
+<li class="panel panel-default">
+
+    <div class="panel-heading">
+        <h4 class="panel-title">
+
+            {% if item.children %}
+                <a
+                    data-toggle="collapse"
+                    data-parent="#accordion"
+                    href="#collapse{{ item.id }}"
+                    class="toggle collapsed">
+                </a>
+            {% endif %}
+
+            <a href="spip.php?rubrique{{ item.id }}" class="branche">
+                {{ item.title }}
+            </a>
+
+        </h4>
+    </div>
+
+    {% if item.children %}
+        <div id="collapse{{ item.id }}" class="panel-collapse collapse">
+
+            <ul class="panel-body table">
+
+                {% for child in item.children %}
+
+                    {% if child.children %}
+
+                        {% include "application/menu_item.html" with item=child %}
+
+                    {% else %}
+
+                        <li>
+                            <a href="spip.php?rubrique{{ child.id }}">
+                                {{ child.title }}
+                            </a>
+                        </li>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+    {% endif %}
+
+</li>

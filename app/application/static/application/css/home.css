@@ -1,0 +1,82 @@
+#hero {
+  margin-left: 0;
+  margin-bottom: 1em;
+  font-family: "marianneregular", sans-serif;
+  font-size: 1rem;
+  line-height: 1.42857143em;
+  color: #333;
+  -webkit-text-size-adjust: 100%;
+}
+
+.bandeau_complet {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  background-color: #f3f8fc;
+  font-family: "marianneregular", sans-serif;
+  font-size: 1rem;
+  line-height: 1.42857143em;
+  color: #333;
+  -webkit-text-size-adjust: 100%;
+}
+
+.herologo {
+  min-width: 280px;
+  height: 100%;
+  overflow: hidden;
+  background-image: url("../assets/composite_camus.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  font-family: "marianneregular", sans-serif;
+  font-size: 1rem;
+  line-height: 1.42857143em;
+  color: #333;
+  -webkit-text-size-adjust: 100%;
+}
+
+.heroinfos {
+  padding: 5px;
+  margin: 5px;
+}
+
+.logo_acad {
+  padding: 10px;
+}
+
+.title_zone {
+  padding: 20px;
+  text-align: center;
+}
+
+#site_title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+#site_sub {
+  font-size: 1.7rem;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .bandeau_complet {
+    height: 180px;
+  }
+  .herologo {
+    min-width: 200px;
+  }
+}
+@media (max-width: 480px) {
+  .bandeau_complet {
+    height: 150px;
+  }
+  .herologo {
+    min-width: 100%;
+  }
+}
+
+/*# sourceMappingURL=home.css.map */

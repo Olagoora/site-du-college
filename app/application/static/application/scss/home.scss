@@ -1,0 +1,135 @@
+// =====================================================
+// VARIABLES
+// =====================================================
+
+$font-principale: "marianneregular", sans-serif;
+
+$couleur-texte: #333;
+$couleur-fond-hero: #f3f8fc;
+
+$hauteur-hero: 240px;
+$largeur-logo-min: 280px;
+
+
+// =====================================================
+// HERO
+// =====================================================
+
+#hero {
+    margin-left: 0;
+    margin-bottom: 1em;
+
+    font-family: $font-principale;
+    font-size: 1rem;
+    line-height: 1.42857143em;
+    color: $couleur-texte;
+
+    -webkit-text-size-adjust: 100%;
+}
+
+
+// =====================================================
+// BANDEAU
+// =====================================================
+
+.bandeau_complet {
+    position: relative;
+
+    display: flex;
+
+    width: 100%;
+    height: $hauteur-hero;
+
+    overflow: hidden;
+
+    background-color: $couleur-fond-hero;
+
+    font-family: $font-principale;
+    font-size: 1rem;
+    line-height: 1.42857143em;
+    color: $couleur-texte;
+
+    -webkit-text-size-adjust: 100%;
+}
+
+
+// =====================================================
+// LOGO
+// =====================================================
+
+.herologo {
+    min-width: $largeur-logo-min;
+    height: 100%;
+
+    overflow: hidden;
+
+    background-image: url("../assets/composite_camus.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    font-family: $font-principale;
+    font-size: 1rem;
+    line-height: 1.42857143em;
+    color: $couleur-texte;
+
+    -webkit-text-size-adjust: 100%;
+}
+
+// =====================================================
+// heroinfos
+// =====================================================
+
+.heroinfos {
+    padding: 5px;
+    margin: 5px;
+}
+
+
+// =====================================================
+// HEADER
+// =====================================================
+
+.logo_acad {
+    padding: 10px;
+}
+
+.title_zone {
+    padding: 20px;
+    text-align: center;
+}
+
+#site_title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: $couleur-texte;
+}
+
+#site_sub {
+    font-size: 1.7rem;
+    color: $couleur-texte;
+}
+
+// =====================================================
+// RESPONSIVE
+// =====================================================
+
+@media (max-width: 768px) {
+    .bandeau_complet {
+        height: 180px;
+    }
+
+    .herologo {
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .bandeau_complet {
+        height: 150px;
+    }
+
+    .herologo {
+        min-width: 100%;
+    }
+}
