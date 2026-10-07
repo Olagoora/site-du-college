@@ -1,0 +1,150 @@
+.rubrique-page {
+    width: 100%;
+
+
+    // ============================================================
+    // FIL D'ARIANE
+    // ============================================================
+
+    .breadcrumb {
+        margin-bottom: 20px;
+
+        font-size: 14px;
+        color: #777;
+
+
+        a {
+            color: #5aa6d8;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+
+        .breadcrumb-current {
+            color: #555;
+            font-style: italic;
+        }
+    }
+
+
+    // ============================================================
+    // TITRE
+    // ============================================================
+
+    .rubrique-title {
+        margin: 0;
+
+        font-size: 38px;
+        font-weight: 700;
+
+        color: #4a4a4a;
+
+        text-transform: uppercase;
+    }
+
+
+    // ============================================================
+    // BLOC DES ENFANTS
+    // ============================================================
+
+    .rubrique-children {
+        margin-top: 25px;
+        padding: 22px 25px 28px;
+
+        background: #fff;
+
+        border: 1px solid #ddd;
+        border-right: 4px solid #ccc;
+
+
+        // --------------------------------------------------------
+        // TITRE DU BLOC
+        // --------------------------------------------------------
+
+        h2 {
+            margin: 0 0 20px;
+
+            font-size: 20px;
+            font-weight: 700;
+
+            color: #0074b8;
+
+            text-transform: uppercase;
+        }
+
+
+        // --------------------------------------------------------
+        // ICÔNE
+        // --------------------------------------------------------
+
+        .rubrique-icon {
+            display: inline-block;
+
+            margin-right: 8px;
+
+            font-size: 22px;
+        }
+
+
+        // --------------------------------------------------------
+        // LISTE
+        // --------------------------------------------------------
+
+        .rubrique-list {
+            list-style: none;
+
+            margin: 0;
+            padding: 0 0 0 40px;
+
+
+            // ----------------------------------------------------
+            // ÉLÉMENT
+            // ----------------------------------------------------
+
+            li {
+                position: relative;
+
+                margin: 10px 0;
+                padding-left: 15px;
+
+
+                // ------------------------------------------------
+                // PETITE FLÈCHE
+                // ------------------------------------------------
+
+                &::before {
+                    content: "›";
+
+                    position: absolute;
+                    left: 0;
+
+                    color: #bbb;
+
+                    font-size: 25px;
+                    line-height: 18px;
+                }
+
+
+                // ------------------------------------------------
+                // LIEN
+                // ------------------------------------------------
+
+                a {
+                    color: #5aa6d8;
+
+                    text-decoration: none;
+
+                    font-size: 18px;
+
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}

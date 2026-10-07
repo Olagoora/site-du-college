@@ -1,58 +1,60 @@
+{% extends "application/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{% block head %}
     <title>Collège Albert Camus</title>
     <link rel="stylesheet" href="{% static 'application/style.css' %}">
     <link rel="stylesheet" href="{% static 'application/css/home.css' %}">
-</head>
-<body>
-    <div class="globale">
-        <header class="header">
-            <div class="header" id="header">
-                <div class="container">
-                    <div id="site_header" style="display: flex;">
-                        <div class="logo_acad">
-                            <a class="spip_out" href="./" title="Accueil" target="_blank">
-                                <img src="{% static 'application/assets/République.Française.png' %}" alt="Collège Albert Camus" height="110">
-                            </a>
-                        </div>
-                        <div class="title_zone">
-                            <h1 id="site_title">Collège Albert Camus</h1>
-                            <p id="site_sub">Bois-Colombes</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <main>
-            <menu>
-                {% include "application/menu.html" %}
-            </menu>
-        </main>
-        <div id="hero" class="row">
-        <!---->
+    <link rel="stylesheet" href="{% static 'application/css/side/menu.css' %}">
+{% endblock %}
 
+{% block js %}
+<script src="{% static 'application/js/menu.js' %}"></script>
+{% endblock %}
 
-            <div class="bandeau_complet">
-                <div class="herologo">
-                    <img src="{% static 'application/assets/composite_camus.png' %}" alt="Collège Albert Camus - Bois-Colombes" class="image-collège" style="width: 280px; height: 240px;">
-                </div>
-                
-                <div class="heroinfos">
-                    <h3 class="h3 wellcom">Bienvenue sur le site du collège Albert Camus</h3>
-                    <p class="p info-collège">Le collège Albert Camus à Bois-Colombes dans les Hauts-de-Seine accueille près de 670 élèves dans 23 classes et un dispositif ULIS. <br class="autobr">
-                    Pour nous contacter&nbsp;: <br class="autobr">
-                    27 rue Pasteur 92270 BOIS-COLOMBES<br class="autobr">
-                    01 55 66 90 70<br class="autobr">
-                    <a href="mailto: ce.0921779J@ac-versailles.fr" class="spip_mail">ce.0921779J@ac-versailles.fr</a>
-                </p>
-                </div>
-            </div>
+{% block hero %}
+<div id="hero" class="row">
+    <div class="bandeau_complet">
+        <div class="herologo">
+            <img
+                src="{% static 'application/assets/composite_camus.png' %}"
+                alt="Collège Albert Camus - Bois-Colombes"
+                class="image-collège"
+                style="width: 280px; height: 240px;"
+            >
+        </div>
+
+        <div class="heroinfos">
+            <h3 class="h3 wellcom">
+                Bienvenue sur le site du collège Albert Camus
+            </h3>
+            <p class="p info-collège">
+
+                Le collège Albert Camus à Bois-Colombes
+                dans les Hauts-de-Seine accueille près de 670 élèves
+                dans 23 classes et un dispositif ULIS.
+                <br class="autobr">
+                Pour nous contacter :
+                <br class="autobr">
+                27 rue Pasteur 92270 BOIS-COLOMBES
+                <br class="autobr">
+                01 55 66 90 70
+                <br class="autobr">
+                <a
+                    href="mailto:ce.0921779J@ac-versailles.fr"
+                    class="spip_mail"
+                >
+                    ce.0921779J@ac-versailles.fr
+                </a>
+            </p>
         </div>
     </div>
-    </div>
-</body>
-</html>
+</div>
+
+{% endblock %}
+
+{% block content %}
+<dl class="contentinfo">
+    
+</dl>
+{% endblock %}

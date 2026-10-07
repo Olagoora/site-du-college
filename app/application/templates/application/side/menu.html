@@ -1,0 +1,19 @@
+<div class="heromenu">
+
+    {% include "application/side/recherche.html" %}
+
+    <nav class="menu" aria-label="Menu principal">
+
+        <h2 class="menu-title">Menu</h2>
+
+        <ul class="menu-list" id="accordion">
+
+            {% for item in menu_items %}
+                {% include "application/side/menu_item.html" with item=item %}
+            {% endfor %}
+
+        </ul>
+
+    </nav>
+
+</div>

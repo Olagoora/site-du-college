@@ -74,11 +74,36 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "college_content",
+        "USER": "college",
+        "PASSWORD": "PassWord.College13!",
+        "HOST": "127.0.0.1",
+        "PORT": "3306",
+        "OPTIONS": {
+            "charset": "utf8mb4",
+        },
+    },
+
+    "dynamic": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "college_dynamic",
+        "USER": "college",
+        "PASSWORD": "PassWord.College13!",
+        "HOST": "127.0.0.1",
+        "PORT": "3306",
+        "OPTIONS": {
+            "charset": "utf8mb4",
+        },
+    },
 }
+
+DATABASE_ROUTERS = [
+    "application.db_router.CollegeDatabaseRouter",
+]
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # Password validation

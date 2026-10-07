@@ -1,0 +1,46 @@
+<li class="menu-item">
+
+    <div class="menu-item-header">
+
+        {% if item.children %}
+
+            <button
+                type="button"
+                class="menu-toggle is-closed"
+                aria-expanded="false"
+                aria-controls="submenu-{{ item.key }}"
+            >
+                <span class="menu-toggle-icon">+</span>
+            </button>
+
+        {% endif %}
+
+        <a href="{% url 'spip' item.id %}" class="menu-link">
+            {{ item.title }}
+        </a>
+
+    </div>
+
+    {% if item.children %}
+
+        <div
+            id="submenu-{{ item.key }}"
+            class="menu-submenu"
+            aria-hidden="true"
+        >
+
+            <ul class="menu-submenu-list">
+
+                {% for child in item.children %}
+
+                    {% include "application/side/menu_item.html" with item=child %}
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+    {% endif %}
+
+</li>

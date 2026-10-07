@@ -1,0 +1,412 @@
+@use "../variables" as vars;
+@use "../mixins" as *;
+
+/* =========================================================
+   MIXINS
+   ========================================================= */
+
+@mixin reset-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+
+@mixin menu-link {
+    display: block;
+
+    font-family: vars.$font-principale;
+    color: vars.$couleur-texte;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+
+    &:hover,
+    &:focus {
+        color: vars.$couleur-texte;
+        text-decoration: none;
+    }
+}
+
+
+@mixin menu-item-spacing {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================================
+   MENU
+   ========================================================= */
+
+.heromenu {
+
+    -webkit-text-size-adjust: 100%;
+
+    font-family: vars.$font-principale;
+    font-size: 1rem;
+    line-height: 1.42857143em;
+    color: vars.$couleur-texte;
+
+
+    /* =====================================================
+       RECHERCHE
+       ===================================================== */
+
+    .form-search {
+
+        margin-bottom: 1em;
+
+        .formulaire_recherche {
+
+            width: 100%;
+
+            .input-append {
+
+                display: flex;
+                width: 100%;
+
+
+                .search {
+
+                    flex: 1;
+                    min-width: 0;
+
+                    padding: 0.5em 0.7em;
+
+                    font-family: vars.$font-principale;
+                    font-size: 1rem;
+
+                    border: 1px solid #ccc;
+                    border-radius: 0;
+
+                    &:focus {
+                        outline: none;
+                        border-color: #999;
+                    }
+                }
+
+
+                .btn {
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    padding: 0.5em 0.8em;
+
+                    border: 1px solid #ccc;
+                    border-left: 0;
+
+                    background: transparent;
+
+                    cursor: pointer;
+
+                    &:hover {
+                        background: #f3f3f3;
+                    }
+                }
+            }
+        }
+    }
+
+
+    /* =====================================================
+       MENU PRINCIPAL
+       ===================================================== */
+
+    .menu {
+
+        width: 100%;
+        margin: 0;
+        padding: 0;
+
+
+        &-title {
+
+            margin: 0 0 0.5em;
+
+            font-size: 1.5rem;
+            font-weight: 600;
+
+            color: vars.$couleur-texte;
+        }
+
+
+        /* =================================================
+           LISTE PRINCIPALE
+           ================================================= */
+
+        &-list {
+
+            @include reset-list;
+
+
+            /* =============================================
+               ÉLÉMENT
+               ============================================= */
+
+            .menu-item {
+
+                @include menu-item-spacing;
+
+
+                /* =========================================
+                   EN-TÊTE
+                   ========================================= */
+
+                &-header {
+
+                    display: flex;
+                    align-items: center;
+
+                    @include menu-item-spacing;
+
+
+                    /* =====================================
+                       BOUTON +
+                       ===================================== */
+
+                    .menu-toggle {
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        width: 2.5rem;
+                        height: 2.5rem;
+
+                        flex: 0 0 2.5rem;
+
+                        margin: 0;
+                        padding: 0;
+
+                        border: 0;
+
+                        background: transparent;
+
+                        font-family: vars.$font-principale;
+
+                        cursor: pointer;
+
+
+                        /* -------------------------------
+                           ICÔNE
+                           ------------------------------- */
+
+                        &-icon {
+
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            width: 1.5rem;
+                            height: 1.5rem;
+
+                            font-size: 1.4rem;
+                            line-height: 1;
+
+                            transition:
+                                transform 0.25s ease;
+                        }
+
+
+                        /* -------------------------------
+                           ÉTAT OUVERT
+                           ------------------------------- */
+
+                        &.is-open {
+
+                            .menu-toggle-icon {
+                                transform: rotate(180deg);
+                            }
+                        }
+
+
+                        &:hover {
+                            background: #f3f3f3;
+                        }
+
+
+                        &:focus-visible {
+                            outline: 2px solid #999;
+                            outline-offset: 2px;
+                        }
+                    }
+
+
+                    /* =====================================
+                       LIEN
+                       ===================================== */
+
+                    .menu-link {
+
+                        @include menu-link;
+
+                        flex: 1;
+
+                        padding: 0.65em 0.8em;
+                    }
+                }
+
+
+                /* =========================================
+                   SOUS-MENU
+                   ========================================= */
+
+                .menu-submenu {
+
+                    display: grid;
+
+                    grid-template-rows: 0fr;
+
+                    overflow: hidden;
+
+                    opacity: 0;
+
+                    transition:
+                        grid-template-rows 0.35s ease,
+                        opacity 0.25s ease;
+
+
+                    /* -------------------------------------
+                       LISTE
+                       ------------------------------------- */
+
+                    &-list {
+
+                        min-height: 0;
+
+                        overflow: hidden;
+
+                        @include reset-list;
+
+                        padding-left: 2rem;
+                    }
+
+
+                    /* -------------------------------------
+                       ÉTAT OUVERT
+                       ------------------------------------- */
+
+                    &.is-open {
+
+                        grid-template-rows: 1fr;
+
+                        opacity: 1;
+                    }
+
+
+                    /* -------------------------------------
+                       ÉLÉMENT
+                       ------------------------------------- */
+
+                    .menu-submenu-item {
+
+                        @include menu-item-spacing;
+
+
+                        .menu-submenu-link {
+
+                            @include menu-link;
+
+                            padding:
+                                0.5em
+                                0.8em
+                                0.5em
+                                0.8em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .heromenu {
+
+        .menu {
+
+            &-title {
+                font-size: 1.3rem;
+            }
+
+
+            &-list {
+
+                .menu-item {
+
+                    &-header {
+
+                        .menu-toggle {
+                            width: 2.25rem;
+                            height: 2.25rem;
+                            flex-basis: 2.25rem;
+                        }
+
+
+                        .menu-link {
+                            padding: 0.7em;
+                        }
+                    }
+
+
+                    .menu-submenu {
+
+                        .menu-submenu-list {
+                            padding-left: 1.5rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .heromenu {
+
+        .menu {
+
+            &-list {
+
+                .menu-item {
+
+                    &-header {
+
+                        .menu-toggle {
+                            width: 2rem;
+                            height: 2rem;
+                            flex-basis: 2rem;
+                        }
+
+
+                        .menu-link {
+                            padding: 0.7em 0.6em;
+                        }
+                    }
+
+
+                    .menu-submenu {
+
+                        .menu-submenu-list {
+                            padding-left: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

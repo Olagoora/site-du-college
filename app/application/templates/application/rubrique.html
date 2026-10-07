@@ -1,0 +1,88 @@
+{% extends "application/base.html" %}
+{% load static %}
+
+{% block head %}
+    <title>Rubrique {{ element.nom }}</title>
+    <link rel="stylesheet" href="{% static 'application/style.css' %}">
+    <link rel="stylesheet" href="{% static 'application/css/side/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'application/css/side/diapo.css' %}">
+    <link rel="stylesheet" href="{% static 'application/css/rubrique.css' %}">
+{% endblock %}
+
+
+{% block hero %}
+<div class="rubrique-page">
+
+    <!-- FIL D'ARIANE -->
+
+    <div class="breadcrumb">
+
+        <a href="/">Accueil</a>
+
+        <span> &gt; </span>
+
+        <span class="breadcrumb-current">
+            {{ element.nom }}
+        </span>
+
+    </div>
+
+
+    <!-- TITRE -->
+
+    <h1 class="rubrique-title">
+        {{ element.nom }}
+    </h1>
+
+
+    <!-- ENFANTS -->
+
+    {% if enfants %}
+
+        <section class="rubrique-children">
+
+            <h2>
+
+                <span class="rubrique-icon">
+                    ♟
+                </span>
+
+                {% if type_element == "rubrique" %}
+
+                    SOUS-RUBRIQUES
+
+                {% elif type_element == "sous-rubrique" %}
+
+                    ÉLÉMENTS
+
+                {% elif type_element == "élément" %}
+
+                    SOUS-ÉLÉMENTS
+
+                {% endif %}
+
+            </h2>
+
+
+            <ul class="rubrique-list">
+
+                {% for enfant in enfants %}
+
+                    <li>
+
+                        <a href="{% url 'spip' enfant.id %}">
+                            {{ enfant.nom }}
+                        </a>
+
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </section>
+
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -38,25 +38,12 @@
 }
 
 .heroinfos {
-  padding: 0 2em 3em 2em;
-  -webkit-text-size-adjust: 100%;
-  --mediabox-sidebar-width: 25rem;
-  --mediabox-sidebar-height: calc(5rem + 20%);
-  --mediabox-sidebar-close-size: 2rem;
-  --minical-border-color: #ccc;
-  --minical-active-bg: #f3d17a;
-  --minical-active-color: #333;
-  --minical-active-border-color: transparent;
-  --minical-active-bg-hover: #deba5d;
-  --minical-border-dark-color: #999;
-  --minical-day-disabled-color: #999;
-  --minical-calendrier-couleur6-bg: #DBB8DC;
-  --minical-calendrier-couleur6-bg-hover: #cd9fce;
-  --minical-calendrier-couleur6-color: #636;
-  line-height: 1.42857143em;
-  font-family: "marianneregular";
+  padding: 0 2em 3em;
+  font-family: "marianneregular", sans-serif;
   font-size: 1rem;
+  line-height: 1.42857143em;
   color: #666;
+  -webkit-text-size-adjust: 100%;
 }
 .heroinfos .wellcom {
   font-size: 2rem;
@@ -81,6 +68,25 @@
   color: #333;
 }
 
+.main {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+}
+.main .side {
+  order: 2;
+  width: 300px;
+  flex-shrink: 0;
+}
+.main .content {
+  order: 1;
+  flex: 1;
+}
+
+.footer {
+  text-align: center;
+  background-color: rgba(69, 0, 158, 0.8980392157);
+}
 @media (max-width: 768px) {
   .bandeau_complet {
     height: 180px;
@@ -95,6 +101,20 @@
   }
   .herologo {
     min-width: 100%;
+  }
+}
+@media (max-width: 1000px) {
+  .heroinfo .welcom {
+    font-size: 1.8rem;
+  }
+}
+@media (max-width: 800px) {
+  .main {
+    flex-direction: column;
+  }
+  .main .content,
+  .main .side {
+    width: 100%;
   }
 }
 

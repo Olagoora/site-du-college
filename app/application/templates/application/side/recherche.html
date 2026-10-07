@@ -1,0 +1,32 @@
+<div class="form-search">
+    <div class="formulaire_recherche form-search" id="formulaire_recherche">
+
+        <form action="{% url 'recherche' %}" method="get">
+
+            <div class="input-append">
+
+                <input
+                    type="search"
+                    class="search text search-query"
+                    name="recherche"
+                    id="recherche"
+                    accesskey="4"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    value="{{ recherche }}"
+                >
+
+                <button
+                    type="submit"
+                    class="btn"
+                    title="Rechercher"
+                >
+                    <i class="icon-search"></i>
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>

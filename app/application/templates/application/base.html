@@ -1,0 +1,97 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block head %}
+        <title>Collège Albert Camus</title>
+        <link rel="stylesheet" href="{% static 'application/style.css' %}">
+        <link rel="stylesheet" href="{% static 'application/css/side/menu.css' %}">
+        <link rel="stylesheet" href="{% static 'application/css/side/diapo.css' %}">
+    {% endblock %}
+</head>
+{% block js %}
+{% endblock %}
+<body>
+
+<div class="globale">
+
+    {% block header %}
+    <header class="header">
+
+        <div class="header" id="header">
+
+            <div class="container">
+
+                <div id="site_header" style="display: flex;">
+
+                    <div class="logo_acad">
+                        <a href="./" title="Accueil">
+
+                            <img
+                                src="{% static 'application/assets/République.Française.png' %}"
+                                alt="Collège Albert Camus"
+                                height="110"
+                            >
+
+                        </a>
+                    </div>
+
+                    <div class="title_zone">
+
+                        <h1 id="site_title">
+                            Collège Albert Camus
+                        </h1>
+
+                        <p id="site_sub">
+                            Bois-Colombes
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+    {% endblock %}
+
+    {% block hero %}
+    {% endblock %}
+
+    <main class="main">
+        <div class="side">
+            {% block menu %}
+                {% include "application/side/menu.html" %}
+            {% endblock %}
+            {% block diapo %}
+                {% include "application/side/diapo.html" %}
+            {% endblock %}
+        </div>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+        
+    </main>
+
+    {% block footer %}
+    <footer class="footer">
+        <p class="copy">
+            &copy; 2026 Collège Albert Camus - Bois-Colombes
+        </p>
+        <p class="info">
+            ce site a été créé a la main
+        </p>
+    </footer>
+    {% endblock %}
+
+</div>
+</body>
+</html>
