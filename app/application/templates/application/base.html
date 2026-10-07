@@ -10,9 +10,11 @@
     {% block head %}
         <title>Collège Albert Camus</title>
         <link rel="stylesheet" href="{% static 'application/style.css' %}">
-        <link rel="stylesheet" href="{% static 'application/css/side/menu.css' %}">
-        <link rel="stylesheet" href="{% static 'application/css/side/diapo.css' %}">
     {% endblock %}
+    <link rel="stylesheet" href="{% static 'application/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'application/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'application/css/side/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'application/css/side/diapo.css' %}">
 </head>
 {% block js %}
 {% endblock %}
@@ -57,6 +59,16 @@
 
             </div>
 
+            <div class="nav-collapse nav-collapse-main collapse">
+                <ul class="menu-items menu-liste nav span12 nav navbar-nav">
+		            <li class="item menu-entree ">
+                        <a href="{% url 'home' %}" title="Accueil">
+                            <i class="fas fa-home">
+                            </i>
+                        </a>
+                    </li>		
+	            </ul>
+            </div>
         </div>
 
     </header>
@@ -66,7 +78,7 @@
     {% endblock %}
 
     <main class="main">
-        <div class="side">
+        <div class="side aside" id="aside">
             {% block menu %}
                 {% include "application/side/menu.html" %}
             {% endblock %}

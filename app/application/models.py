@@ -73,3 +73,19 @@ class SousNavigation(models.Model):
 
     def __str__(self):
         return self.nom
+
+class Content(models.Model):
+    rubrique = models.ForeignKey(
+        Rubrique,
+        on_delete=models.CASCADE,
+        related_name="contents"
+    )
+
+    title = models.CharField(max_length=255)
+    content = models.TextField(blank=True)
+    img = models.CharField(max_length=500, blank=True)
+    lien = models.CharField(max_length=500, blank=True)
+    type = models.CharField(max_length=50, default="content")
+
+    def __str__(self):
+        return self.title

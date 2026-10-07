@@ -1,0 +1,148 @@
+{% extends "application/base.html" %}
+{% load static %}
+
+{% block head %}
+    <title>Ajouter une rubrique</title>
+    <link rel="stylesheet" href="{% static 'application/style.css' %}">
+    <link rel="stylesheet" href="{% static 'application/css/side/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'application/css/side/diapo.css' %}">
+    <link rel="stylesheet" href="{% static 'form/css/content_form.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="content-form-page">
+
+    <div class="content-form-header">
+
+        <h1>
+            Ajouter un contenu
+        </h1>
+
+        <p>
+            Créer une nouvelle actualité.
+        </p>
+
+    </div>
+
+
+    <form
+        method="post"
+        class="content-form"
+    >
+
+        {% csrf_token %}
+
+
+        {% if form.non_field_errors %}
+
+            <div class="form-errors">
+
+                {{ form.non_field_errors }}
+
+            </div>
+
+        {% endif %}
+
+
+        <div class="form-group">
+
+            <label for="{{ form.rubrique.id_for_label }}">
+                Rubrique
+            </label>
+
+            {{ form.rubrique }}
+
+            {{ form.rubrique.errors }}
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="{{ form.title.id_for_label }}">
+                Titre
+            </label>
+
+            {{ form.title }}
+
+            {{ form.title.errors }}
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="{{ form.content.id_for_label }}">
+                Contenu
+            </label>
+
+            {{ form.content }}
+
+            {{ form.content.errors }}
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="{{ form.img.id_for_label }}">
+                Image
+            </label>
+
+            {{ form.img }}
+
+            {{ form.img.errors }}
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="{{ form.lien.id_for_label }}">
+                Lien
+            </label>
+
+            {{ form.lien }}
+
+            {{ form.lien.errors }}
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="{{ form.type.id_for_label }}">
+                Type
+            </label>
+
+            {{ form.type }}
+
+            {{ form.type.errors }}
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="submit"
+                class="form-submit"
+            >
+                Ajouter le contenu
+            </button>
+
+            <a
+                href="/"
+                class="form-cancel"
+            >
+                Annuler
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

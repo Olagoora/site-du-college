@@ -1,0 +1,78 @@
+{% extends "application/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'form/css/content_delete.css' %}"
+>
+
+
+<div class="content-delete-page">
+
+    <div class="content-delete-header">
+
+        <h1>
+            Supprimer un contenu
+        </h1>
+
+        <p>
+            Cette action est définitive.
+        </p>
+
+    </div>
+
+
+    <div class="content-delete-card">
+
+        <h2>
+            {{ content.title }}
+        </h2>
+
+
+        {% if content.content %}
+
+            <div class="content-delete-preview">
+                {{ content.content|safe }}
+            </div>
+
+        {% endif %}
+
+
+        <div class="content-delete-warning">
+
+            Voulez-vous vraiment supprimer ce contenu ?
+
+        </div>
+
+
+        <form
+            method="post"
+            class="content-delete-actions"
+        >
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="content-delete-confirm"
+            >
+                Oui, supprimer
+            </button>
+
+
+            <a
+                href="{% url 'spip' content.rubrique_id %}"
+                class="content-delete-cancel"
+            >
+                Annuler
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

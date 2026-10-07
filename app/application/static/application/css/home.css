@@ -104,8 +104,11 @@
   }
 }
 @media (max-width: 1000px) {
+  .heroinfo {
+    padding: 0 1em 2em;
+  }
   .heroinfo .welcom {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
   }
 }
 @media (max-width: 800px) {

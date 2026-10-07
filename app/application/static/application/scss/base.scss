@@ -1,0 +1,612 @@
+@use "variables" as vars;
+@use "mixins" as *;
+
+/* ============================================================
+   MENU PRINCIPAL
+   Modernisation du CSS historique :
+   - flexbox à la place des float
+   - transitions modernes
+   - focus clavier
+   - responsive mobile
+   - aucun préfixe navigateur inutile
+   ============================================================ */
+
+.nav-collapse {
+    width: 100%;
+    font-family: vars.$font-principale;
+    font-size: vars.$menu-font-size;
+    line-height: 1.45;
+    color: vars.$couleur-texte;
+
+    &.collapse {
+        position: relative;
+        height: auto;
+        overflow: visible;
+        transition:
+            max-height 0.35s ease,
+            opacity 0.25s ease;
+
+        .menu-items.menu-liste {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            .menu-entree {
+                display: block;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+
+                > a {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.45rem;
+                    min-height: 42px;
+                    padding: 0.65rem 0.95rem;
+                    margin-right: 0.5rem;
+
+                    color: vars.$menu-link-color;
+                    font-family: vars.$font-principale;
+                    font-size: vars.$menu-font-size;
+                    line-height: 1.35;
+                    text-decoration: none;
+
+                    border-top: 2px solid vars.$menu-border-color;
+                    border-radius: 0.2rem 0.2rem 0 0;
+
+                    transition:
+                        color 0.2s ease,
+                        background-color 0.2s ease,
+                        border-color 0.2s ease,
+                        transform 0.2s ease;
+
+                    &:hover {
+                        color: vars.$couleur-texte;
+                        background-color: rgba(0, 0, 0, 0.035);
+                        border-top-color: currentColor;
+                    }
+
+                    &:focus-visible {
+                        outline: 3px solid rgba(0, 95, 204, 0.35);
+                        outline-offset: 2px;
+                    }
+
+                    &:active {
+                        transform: translateY(1px);
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Icône accueil : plus besoin de l'ancien sprite Bootstrap. */
+.nav-collapse .fa-home {
+    display: inline-grid;
+    width: 1.1em;
+    height: 1.1em;
+    place-items: center;
+    color: currentColor;
+    font-size: 1em;
+    font-weight: 900;
+
+    &::before {
+        content: "⌂";
+    }
+}
+
+/* ============================================================
+   COLLAPSE
+   ============================================================ */
+
+.collapse {
+    position: relative;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+        max-height 0.35s ease,
+        opacity 0.25s ease;
+
+    &.in,
+    &.show {
+        max-height: 1000px;
+        opacity: 1;
+        overflow: visible;
+    }
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+
+.navbar {
+    .nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        gap: 0.25rem;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        > li {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            > a {
+                display: flex;
+                align-items: center;
+                min-height: 42px;
+                padding: 0.65rem 0.95rem;
+                color: vars.$menu-link-color;
+                text-decoration: none;
+                border-top: 2px solid vars.$menu-border-color;
+                border-radius: 0.2rem 0.2rem 0 0;
+
+                transition:
+                    color 0.2s ease,
+                    background-color 0.2s ease,
+                    border-color 0.2s ease;
+
+                &:hover {
+                    color: vars.$couleur-texte;
+                    background-color: rgba(0, 0, 0, 0.035);
+                    border-top-color: currentColor;
+                }
+
+                &:focus-visible {
+                    outline: 3px solid rgba(0, 95, 204, 0.35);
+                    outline-offset: 2px;
+                }
+            }
+        }
+    }
+
+    &-inverse {
+        .nav > li > a,
+        .nav-collapse .nav > li > a {
+            color: vars.$menu-link-color;
+            text-shadow: none;
+            border-top: 2px solid vars.$menu-border-color;
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+/* ============================================================
+   RECHERCHE
+   ============================================================ */
+
+.form-search {
+    position: relative;
+    width: 100%;
+    clear: both;
+    margin: 0 0 1rem;
+    padding: 0;
+    color: vars.$couleur-texte;
+    font-family: vars.$font-principale;
+    font-size: 1rem;
+    line-height: 1.45;
+    background: #f9fafd;
+    border: 0;
+    box-shadow: none;
+
+    form {
+        display: flex;
+        width: 100%;
+        margin: 0;
+
+        .input-append {
+            display: flex;
+            width: 100%;
+            margin: 0;
+            white-space: normal;
+        }
+    }
+
+    #recherche {
+        flex: 1 1 auto;
+        min-width: 0;
+        height: auto;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0.65rem 0.9rem;
+
+        color: #555;
+        font-family: inherit;
+        font-size: 1rem;
+        line-height: 1.4;
+
+        background: #fff;
+        border: 1px solid #ccc;
+        border-right: 0;
+        border-radius: 0.65rem 0 0 0.65rem;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+
+        &:focus {
+            border-color: #777;
+            outline: none;
+            box-shadow:
+                inset 0 1px 2px rgba(0, 0, 0, 0.06),
+                0 0 0 3px rgba(0, 95, 204, 0.12);
+        }
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        min-width: 46px;
+        padding: 0.65rem 0.85rem;
+        margin: 0;
+
+        color: #333;
+        font: inherit;
+        line-height: 1.4;
+        cursor: pointer;
+
+        background: linear-gradient(to bottom, #fff, #e9e9e9);
+        border: 1px solid #bbb;
+        border-radius: 0 0.65rem 0.65rem 0;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+        transition:
+            background 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.15s ease;
+
+        &:hover {
+            background: linear-gradient(to bottom, #fff, #ddd);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        &:focus-visible {
+            outline: 3px solid rgba(0, 95, 204, 0.3);
+            outline-offset: 2px;
+        }
+
+        &:active {
+            transform: translateY(1px);
+        }
+    }
+
+    .icon-search {
+        display: inline-flex;
+        width: 1.1em;
+        height: 1.1em;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        overflow: visible;
+
+        background: none;
+
+        &::before {
+            content: "⌕";
+            font-size: 1.35em;
+            line-height: 1;
+        }
+    }
+}
+
+/* Variante utilisée par les formulaires SPIP historiques. */
+#aside {
+    #formulaire_recherche {
+        border: 0;
+        box-shadow: none;
+    }
+
+    .formulaire_spip,
+    .formulaire_login {
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: #f9fafd;
+        border: 1px solid #eaeaea;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+}
+
+.formulaire_recherche,
+.secondary .formulaire_recherche {
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border: 0;
+
+    form {
+        margin: 0;
+
+        .input-append {
+            display: flex;
+            width: 100%;
+            margin: 0;
+        }
+    }
+
+    input,
+    textarea,
+    select,
+    .help-inline,
+    .uneditable-input,
+    .input-prepend,
+    .input-append {
+        display: inline-block;
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
+
+    input.search,
+    input.text {
+        box-sizing: border-box;
+        width: 100%;
+    }
+}
+
+.formulaire_spip {
+    clear: both;
+    position: relative;
+    margin-bottom: 1.4rem;
+    padding: 1.25rem;
+    background: #f5f5f5;
+
+    form {
+        margin: 0;
+    }
+}
+
+/* ============================================================
+   CHAMPS DE FORMULAIRE
+   ============================================================ */
+
+input,
+textarea,
+select,
+.uneditable-input {
+    box-sizing: border-box;
+    max-width: 100%;
+    font: inherit;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+textarea,
+select,
+.uneditable-input {
+    min-height: 40px;
+    padding: 0.55rem 0.75rem;
+    color: #555;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 0.45rem;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+    &:focus {
+        border-color: #777;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 95, 204, 0.12);
+    }
+}
+
+input[type="search"] {
+    appearance: textfield;
+}
+
+/* ============================================================
+   BOUTONS
+   ============================================================ */
+
+.btn,
+button.btn,
+input[type="submit"].btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0.55rem 0.9rem;
+
+    font: inherit;
+    line-height: 1.35;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+
+    color: #333;
+    background: linear-gradient(to bottom, #fff, #e9e9e9);
+    border: 1px solid #bbb;
+    border-radius: 0.45rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.15s ease;
+
+    &:hover {
+        background: linear-gradient(to bottom, #fff, #ddd);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    &:focus-visible {
+        outline: 3px solid rgba(0, 95, 204, 0.3);
+        outline-offset: 2px;
+    }
+
+    &:active {
+        transform: translateY(1px);
+    }
+}
+
+/* ============================================================
+   COMPATIBILITÉ DES ANCIENS GROUPES
+   ============================================================ */
+
+.input-append,
+.input-prepend {
+    display: inline-flex;
+    align-items: stretch;
+    margin-bottom: 0;
+    vertical-align: middle;
+    font-size: 1rem;
+    white-space: normal;
+
+    > input,
+    > select,
+    > .uneditable-input {
+        margin: 0;
+    }
+
+    > .btn,
+    > .add-on {
+        margin-left: -1px;
+    }
+}
+
+.input-append {
+    > input,
+    > select,
+    > .uneditable-input {
+        border-radius: 0.45rem 0 0 0.45rem;
+    }
+
+    > .btn,
+    > .add-on {
+        border-radius: 0 0.45rem 0.45rem 0;
+    }
+}
+
+/* ============================================================
+   ANCIENS ICON-* : on conserve les classes sans le vieux sprite
+   ============================================================ */
+
+[class^="icon-"],
+[class*=" icon-"] {
+    display: inline-flex;
+    width: 1em;
+    height: 1em;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    line-height: 1;
+    vertical-align: middle;
+    background: none;
+    overflow: visible;
+    text-indent: 0;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 800px) {
+    .nav-collapse {
+        &.collapse {
+            .menu-items.menu-liste {
+                flex-direction: column;
+                align-items: stretch;
+
+                .menu-entree {
+                    width: 100%;
+
+                    > a {
+                        width: 100%;
+                        margin-right: 0;
+                        border-top-width: 1px;
+                        border-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .navbar {
+        .nav {
+            flex-direction: column;
+            align-items: stretch;
+
+            > li,
+            > li > a {
+                width: 100%;
+            }
+
+            > li > a {
+                margin-right: 0;
+            }
+        }
+    }
+
+    .form-search,
+    .formulaire_recherche,
+    .secondary .formulaire_recherche {
+        .input-append {
+            width: 100%;
+        }
+
+        #recherche {
+            min-width: 0;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-collapse {
+        font-size: 1rem;
+
+        .menu-items.menu-liste .menu-entree > a {
+            min-height: 44px;
+            padding: 0.7rem 0.8rem;
+        }
+    }
+
+    .form-search {
+        .btn {
+            min-width: 44px;
+            padding-inline: 0.7rem;
+        }
+    }
+}
+
+/* ============================================================
+   ACCESSIBILITÉ / MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

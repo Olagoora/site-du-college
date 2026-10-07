@@ -86,3 +86,131 @@
 
 </div>
 {% endblock %}
+
+{% block content %}
+
+<div class="rubrique-page">
+
+    <div class="breadcrumb">
+        <a href="/">Accueil</a>
+        <span> &gt; </span>
+        <span class="breadcrumb-current">
+            {{ element.nom }}
+        </span>
+    </div>
+
+
+    <h1 class="rubrique-title">
+        {{ element.nom }}
+    </h1>
+
+
+    {% if structure.children %}
+
+        <section class="rubrique-children">
+
+            {% if type_element == "rubrique" %}
+                <h2>SOUS-RUBRIQUES</h2>
+
+            {% elif type_element == "sous-rubrique" %}
+                <h2>ÉLÉMENTS</h2>
+
+            {% elif type_element == "élément" %}
+                <h2>SOUS-ÉLÉMENTS</h2>
+            {% endif %}
+
+
+            <ul class="rubrique-list">
+
+                {% for enfant in structure.children %}
+
+                    <li>
+                        <a href="{% url 'spip' enfant.id %}">
+                            {{ enfant.nom }}
+                        </a>
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </section>
+
+    {% endif %}
+
+
+    {% if structure.content %}
+
+        <section class="rubrique-content">
+
+            {% for item in structure.content %}
+
+                <article class="content-item">
+
+                    <h2 class="content-title">
+                        {{ item.title }}
+                    </h2>
+
+
+                    {% if item.img %}
+
+                        <div class="content-image">
+
+                            <img
+                                src="{{ item.img }}"
+                                alt="{{ item.title }}"
+                            >
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if item.content %}
+
+                        <div class="content-text">
+                            {{ item.content|safe }}
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if item.lien %}
+
+                        <div class="content-link">
+
+                            <a href="{{ item.lien }}">
+                                En savoir plus
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- {% if user.is_staff %} -->
+
+                        <div class="content-admin">
+
+                            <a
+                                href="{% url 'content_delete' item.id %}"
+                                class="content-delete-button"
+                            >
+                                Supprimer
+                            </a>
+
+                        </div>
+
+                    <!-- {% endif %} -->
+
+                </article>
+
+            {% endfor %}
+
+        </section>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

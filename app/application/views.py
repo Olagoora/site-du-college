@@ -1,6 +1,12 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import Http404
-from .models import Menu, Rubrique, Navigation, SousNavigation
+from .models import (
+    Menu,
+    Rubrique,
+    Navigation,
+    SousNavigation,
+    Content,
+)
 
 # Create your views here.
 # menu_items = [
@@ -139,7 +145,7 @@ def recherche(request):
 
     return render(
         request,
-        "application/side/recherche.html",
+        "application/find/find.html",
         {
             "recherche": recherche,
         }
@@ -237,165 +243,253 @@ def rubrique(request, id):
         {"rubrique": rubrique}
     )
 
+def build_content_data(rubrique):
+    contents = (
+        Content.objects
+        .using("dynamic")
+        .filter(rubrique=rubrique)
+        .order_by("id")
+    )
+
+    return [
+        {
+            "id": item.id,
+            "title": item.title,
+            "content": item.content,
+            "img": item.img,
+            "lien": item.lien,
+            "type": item.type,
+        }
+        for item in contents
+    ]
+
+
+def build_navigation_data(navigation):
+    """
+    Transforme une Navigation SQL en élément envoyé au template.
+    """
+
+    sous_navigations = (
+        SousNavigation.objects
+        .using("dynamic")
+        .filter(
+            navigation=navigation,
+            actif=True,
+        )
+        .order_by("ordre", "id")
+    )
+
+    return {
+        "id": navigation.id,
+        "nom": navigation.nom,
+        "slug": navigation.slug,
+        "type": "élément",
+        "children": [
+            {
+                "id": item.id,
+                "nom": item.nom,
+                "slug": item.slug,
+                "type": "sous-élément",
+                "children": [],
+            }
+            for item in sous_navigations
+        ],
+    }
+
+
+def build_rubrique_data(rubrique):
+    navigations = (
+        Navigation.objects
+        .using("dynamic")
+        .filter(rubrique=rubrique, actif=True)
+        .order_by("ordre", "id")
+    )
+
+    return {
+        "id": rubrique.id,
+        "nom": rubrique.nom,
+        "slug": rubrique.slug,
+        "type": "sous-rubrique",
+
+        "children": [
+            build_navigation_data(navigation)
+            for navigation in navigations
+        ],
+
+        "content": build_content_data(rubrique),
+    }
+
+
+def build_menu_data(menu):
+    """
+    Transforme un Menu SQL en rubrique pour rubrique.html.
+
+    Menu SQL
+        ↓
+    rubrique HTML
+    """
+
+    rubriques = (
+        Rubrique.objects
+        .using("dynamic")
+        .filter(
+            menu=menu,
+            actif=True,
+        )
+        .order_by("ordre", "id")
+    )
+
+    return {
+        "id": menu.id,
+        "nom": menu.nom,
+        "slug": menu.slug,
+        "type": "rubrique",
+
+        "children": [
+            build_rubrique_data(rubrique)
+            for rubrique in rubriques
+        ],
+    }
+
 def spip(request, id):
     """
-    Transforme l'identifiant SQL en type de page utilisé par rubrique.html.
+    Construit la structure complète à partir d'un élément SQL.
 
     Correspondance :
-        Menu            -> rubrique
-        Rubrique        -> sous-rubrique
-        Navigation      -> élément
-        SousNavigation  -> sous-élément
+
+        Menu            → rubrique
+        Rubrique        → sous-rubrique
+        Navigation      → élément
+        SousNavigation  → sous-élément
+
+    Le contenu est toujours séparé de children.
     """
 
     element = None
+    structure = None
     type_element = None
 
-    menu = None
-    rubrique = None
-    navigation = None
-    sous_navigation = None
+    # ---------------------------------------------------------
+    # 1. MENU
+    # ---------------------------------------------------------
 
-    parent = None
-    enfants = []
-
-
-    # ============================================================
-    # MENU -> RUBRIQUE
-    # ============================================================
-
-    menu = (
-        Menu.objects.using("dynamic")
-        .filter(id=id, actif=True)
-        .first()
-    )
-
-    if menu:
+    try:
+        menu = (
+            Menu.objects
+            .using("dynamic")
+            .get(
+                id=id,
+                actif=True,
+            )
+        )
 
         element = menu
         type_element = "rubrique"
+        structure = build_menu_data(menu)
 
-        # Les enfants d'un Menu sont ses Rubriques
-        enfants = (
-            menu.rubriques
-            .filter(actif=True)
-            .order_by("ordre", "id")
-        )
+    except Menu.DoesNotExist:
 
-        rubrique = menu
+        # -----------------------------------------------------
+        # 2. RUBRIQUE
+        # -----------------------------------------------------
 
-
-    # ============================================================
-    # RUBRIQUE -> SOUS-RUBRIQUE
-    # ============================================================
-
-    else:
-
-        rubrique = (
-            Rubrique.objects.using("dynamic")
-            .filter(id=id, actif=True)
-            .first()
-        )
-
-        if rubrique:
+        try:
+            rubrique = (
+                Rubrique.objects
+                .using("dynamic")
+                .select_related("menu")
+                .get(
+                    id=id,
+                    actif=True,
+                )
+            )
 
             element = rubrique
             type_element = "sous-rubrique"
+            structure = build_rubrique_data(rubrique)
 
-            # Les enfants d'une Rubrique sont ses Navigations
-            enfants = (
-                rubrique.navigations
-                .filter(actif=True)
-                .order_by("ordre", "id")
-            )
+        except Rubrique.DoesNotExist:
 
-            parent = rubrique.menu
+            # -------------------------------------------------
+            # 3. NAVIGATION
+            # -------------------------------------------------
 
+            try:
+                navigation = (
+                    Navigation.objects
+                    .using("dynamic")
+                    .select_related("rubrique")
+                    .get(
+                        id=id,
+                        actif=True,
+                    )
+                )
 
-    # ============================================================
-    # NAVIGATION -> ÉLÉMENT
-    # ============================================================
+                element = navigation
+                type_element = "élément"
+                structure = build_navigation_data(navigation)
 
-    if element is None:
+            except Navigation.DoesNotExist:
 
-        navigation = (
-            Navigation.objects.using("dynamic")
-            .filter(id=id, actif=True)
-            .first()
-        )
+                # ---------------------------------------------
+                # 4. SOUS-NAVIGATION
+                # ---------------------------------------------
 
-        if navigation:
+                try:
+                    sous_navigation = (
+                        SousNavigation.objects
+                        .using("dynamic")
+                        .select_related("navigation")
+                        .get(
+                            id=id,
+                            actif=True,
+                        )
+                    )
 
-            element = navigation
-            type_element = "élément"
+                    element = sous_navigation
+                    type_element = "sous-élément"
 
-            # Les enfants d'une Navigation sont ses SousNavigations
-            enfants = (
-                navigation.sous_navigations
-                .filter(actif=True)
-                .order_by("ordre", "id")
-            )
+                    structure = {
+                        "id": sous_navigation.id,
+                        "nom": sous_navigation.nom,
+                        "slug": sous_navigation.slug,
+                        "type": "sous-élément",
+                        "children": [],
+                    }
 
-            parent = navigation.rubrique
-            rubrique = navigation.rubrique
-            menu = navigation.rubrique.menu
+                except SousNavigation.DoesNotExist:
+                    raise Http404("Élément introuvable.")
 
+    # ---------------------------------------------------------
+    # ENFANTS DIRECTS
+    # ---------------------------------------------------------
 
-    # ============================================================
-    # SOUS-NAVIGATION -> SOUS-ÉLÉMENT
-    # ============================================================
+    enfants = structure.get("children", [])
 
-    if element is None:
+    # ---------------------------------------------------------
+    # CONTENU
+    # ---------------------------------------------------------
 
-        sous_navigation = (
-            SousNavigation.objects.using("dynamic")
-            .filter(id=id, actif=True)
-            .first()
-        )
+    content = structure.get("content", [])
 
-        if sous_navigation:
-
-            element = sous_navigation
-            type_element = "sous-élément"
-
-            enfants = []
-
-            parent = sous_navigation.navigation
-            navigation = sous_navigation.navigation
-            rubrique = sous_navigation.navigation.rubrique
-            menu = sous_navigation.navigation.rubrique.menu
-
-
-    # ============================================================
-    # ID INTROUVABLE
-    # ============================================================
-
-    if element is None:
-        raise Http404("Élément de navigation introuvable")
-
-
-    # ============================================================
+    # ---------------------------------------------------------
     # CONTEXTE POUR rubrique.html
-    # ============================================================
+    # ---------------------------------------------------------
 
     context = {
         "element": element,
         "type_element": type_element,
 
-        "menu": menu,
-        "rubrique": rubrique,
-        "navigation": navigation,
-        "sous_navigation": sous_navigation,
+        "structure": structure,
 
-        "parent": parent,
         "enfants": enfants,
+        "content": content,
     }
-
 
     return render(
         request,
         "application/rubrique.html",
-        context
+        context,
     )
 
 def base(request):
